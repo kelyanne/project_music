@@ -25,7 +25,7 @@
                 <img class="card-img-top" src="{{ album.image.thumbnail.url }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{ album.name }}</h5>
-                    <p class="card-text">{{ album.description }} <br> Atista: {{ album.artist }}</p>
+                    <p class="card-text">{{ album.description }} <br> Artista: {{ album.artist }}</p>
                     <a href="{% url 'album_edit' album.id %}" class="btn btn-primary btn-sm">Editar</a>
                     <a href="#modal{{album.id}}" data-toggle="modal" class="btn btn-danger btn-sm">Excluir</a>
                 </div>
