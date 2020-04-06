@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Listar Artistas</title>
+</head>
+<body>
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container">
+  <table class="table table-striped mt-5">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      {% for artist in artists %}
+      <td scope="row">{{ artist.id }}</td>
+      <td>{{ artist.name }}</td>
+      <td>
+        <a href="{% url 'artist_edit' artist.id %}" class="text-primary">Editar</a>
+        <a href="#modal{{artist.id}}" data-toggle="modal" class="text-danger">Excluir</a>
+      </td>
+    </tr>
+    <!-- Modal Delete Artist-->
+    </tbody>
+    <div class="modal fade" id="modal{{artist.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form id="artist_delete_form" method='post' class="form" role="form" action="{% url 'artist_delete' artist.id %}">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              A exclusão do artista <b>{{artist.name}}</b> irá excluir todos os seus álbuns.
+              Você deseja prosseguir?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-danger" value="save">Excluir</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </table>
+  {% include 'layouts/pagination.html' %}
+</div>
+{% endblock %}
+</body>
+</html>

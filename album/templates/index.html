@@ -1,0 +1,51 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Início</title>
+</head>
+<body>
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="w-auto p-3" style="background-color: #eee;">
+    <div class="container">
+        <h1> Olá, Mundo! </h1>
+        <p class=".lead">Esse é o meu primeiro projeto com Django! Consiste em um CRUD simples de Álbum, onde o usuário pode adicionar um nome, descrição, a foto de capa e relacioná-lo a um artista.
+            Esse é um projeto simples que foi desenvolvido junto com o Bootstrap para adiquiri o aprendizado sobre os conceitos básicos do framework.
+        </p>
+    </div>
+</div>
+<div class="container">
+    <div class=" mt-5">
+        <h3 class="text-center">Últimos albuns adicionados</h3>
+        <div class="row mt-5">
+            {% for album in last_albums %}
+            <div class="col-sm">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ album.image.thumbnail.url }}" class="card-img-top img-thumbnail" alt="...">
+                    <div class="card-body">
+                        <p class="card-text font-weight-bold text-center">{{ album.name }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted text_center">Nenhum registro foi encontrado</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="mt-5 mb-5">
+        <h3 class="text-center">Top 5 Artistas</h3>
+        <ul class="list-group mt-5">
+            {% for artist in artists_top_five %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ artist.name }}
+                <span class="badge badge-primary badge-pill">{{artist.count}}</span>
+            </li>
+        </ul>
+        {% empty %}
+        <p class="text-muted">Nenhum registro foi encontrado</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

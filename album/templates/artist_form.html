@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Artista</title>
+</head>
+<body>
+{% extends "layouts/base.html" %}
+{% load bootstrap %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Adicionar Artista</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|bootstrap}}
+        <button type="submit" value="Submit" class="btn btn-primary">Salvar</button>
+        <a href="{% url 'album_new'%}" type="button" class="btn btn-danger">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>

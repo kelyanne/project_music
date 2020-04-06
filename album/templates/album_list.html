@@ -1,0 +1,66 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Listagem Álbum</title>
+</head>
+<body>
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container">
+    <form>
+        <div class="form-row mt-5">
+            <div class="col">
+                <input type="text" name='search' value='{{request.GET.search}}' class="form-control" placeholder="Digite o nome álbum">
+            </div>
+            <button type="submit" class="btn btn-secondary">Buscar</button>
+            <div class="col">
+                <a href="{% url 'album_new' %}" type="button" class="btn btn-primary">Adicionar Álbum</a>
+            </div>
+        </div>
+    </form>
+    <div class="card-columns mt-5">
+        {% for album in albums %}
+        <div class="col-sm-4 mb-3">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ album.image.thumbnail.url }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ album.name }}</h5>
+                    <p class="card-text">{{ album.description }} <br> Atista: {{ album.artist }}</p>
+                    <a href="{% url 'album_edit' album.id %}" class="btn btn-primary btn-sm">Editar</a>
+                    <a href="#modal{{album.id}}" data-toggle="modal" class="btn btn-danger btn-sm">Excluir</a>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Delete Album-->
+        <div class="modal fade" id="modal{{album.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="album_delete_form" method='post' class="form" role="form" action="{% url 'album_delete' album.id %}">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmar exclusão</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Você deseja excluir o álbum <b>{{album.name}}</b>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-danger" value="save">Excluir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted">Nenhum registro foi encontrado</p>
+        {% endfor%}
+    </div>
+    {% include 'layouts/pagination.html' %}
+</div>
+
+{% endblock %}
+</body>
+</html>

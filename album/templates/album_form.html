@@ -1,0 +1,30 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Adicionar álbum</title>
+</head>
+<body>
+{% extends "layouts/base.html" %}
+
+{% block content %}
+{% load bootstrap %}
+<div class="container mt-5">
+    <div class="shadow p-3 mb-5 bg-white rounded">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">{{message}}</div>
+    {% endfor %}
+    {% endif %}
+    <h2>Adicionar novo álbum</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="{% url 'artist_new' %}" type="button" class="btn btn-secondary">Adicionar artista</a>
+        <a href="{% url 'album_list'%}" type="button" class="btn btn-danger">Cancelar</a>
+    </form>
+</div>
+</div>
+{% endblock %}
+</body>
+</html>
